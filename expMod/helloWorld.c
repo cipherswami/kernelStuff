@@ -10,10 +10,10 @@
 #include <linux/init.h>
 
 // Function Declarations
-static void print_hello_dev(const char *dev_name);
+void print_hello_dev(const char *dev_name);
 
 // Module Initialization Function
-static int __init hello_init(void)
+static int __init mod_init(void)
 {
     printk(KERN_INFO "%s: Module loaded\n", THIS_MODULE->name);
     print_hello_dev("Kernel logger");
@@ -21,20 +21,23 @@ static int __init hello_init(void)
 }
 
 // Module Exit Function
-static void __exit hello_exit(void)
+static void __exit mod_exit(void)
 {
     printk(KERN_INFO "%s: Module exited\n", THIS_MODULE->name);
 }
 
 // Function to Print Device Information
-static void print_hello_dev(const char *dev_name)
+void print_hello_dev(const char *dev_name)
 {
     printk(KERN_INFO "%s: Hello kernel from the device %s\n", THIS_MODULE->name, dev_name);
 }
 
+// Symbol Exports
+EXPORT_SYMBOL_GPL(print_hello_dev);
+
 // Register Module Entry and Exit Points
-module_init(hello_init);
-module_exit(hello_exit);
+module_init(mod_init);
+module_exit(mod_exit);
 
 // Module Information
 MODULE_LICENSE("GPL");

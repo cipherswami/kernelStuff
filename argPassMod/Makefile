@@ -17,14 +17,11 @@
 ##i#########################################################################
 
 ### Define your Module Name ###
-MODULE_NAME := myModule
+MODULE_NAME := argPassMod
 ###############################
 
 # Define the module objects
 obj-m := $(MODULE_NAME).o
-
-# Add dependent object files if needed
-$(MODULE_NAME)-objs ?= 
 
 # Set the target architecture (default is x86_64)
 ARCH ?= x86_64

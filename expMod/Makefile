@@ -17,14 +17,11 @@
 ##i#########################################################################
 
 ### Define your Module Name ###
-MODULE_NAME := myModule
+MODULE_NAME := expMod
 ###############################
 
 # Define the module objects
-obj-m := $(MODULE_NAME).o
-
-# Add dependent object files if needed
-$(MODULE_NAME)-objs ?= 
+obj-m := $(MODULE_NAME).o helloWorld.o
 
 # Set the target architecture (default is x86_64)
 ARCH ?= x86_64
@@ -49,24 +46,29 @@ clean:
 # Sign the module (External Script NEEDED: https://github.com/cipherswami/regMOK)
 sign:
 	sudo signmod $(MODULE_NAME).ko
+	sudo signmod helloWorld.ko
 
 # Testing: Insert
 insert:
+	sudo insmod helloWorld.ko
 	sudo insmod $(MODULE_NAME).ko
 
 # Testing: Remove
 remove:
 	sudo rmmod $(MODULE_NAME)
+	sudo rmmod helloWorld
 
 # Install the module
 install:
 	sudo mkdir -p $(INSTALL_PATH)
 	sudo cp $(MODULE_NAME).ko $(INSTALL_PATH)
+	sudo cp helloWorld.ko $(INSTALL_PATH)
 	sudo depmod -a
 
 # Uninstall the module
 uninstall:
 	sudo rm -f $(INSTALL_PATH)$(MODULE_NAME).ko
+	sudo rm -f $(INSTALL_PATH)helloWorld.ko
 	sudo depmod -a
 
 # Load the module

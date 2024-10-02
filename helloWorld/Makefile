@@ -22,7 +22,6 @@ MODULE_NAME := helloWorld
 
 # Define the module objects
 obj-m := $(MODULE_NAME).o
-$(MODULE_NAME)-objs := main.o # Add other object files if needed
 
 # Set the target architecture (default is x86_64)
 ARCH ?= x86_64
